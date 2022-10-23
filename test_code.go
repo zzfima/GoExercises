@@ -93,6 +93,9 @@ func main() {
 	//interface
 	var h2 IMakeVoice = &alex
 	h2.do_voice()
+
+	//parallelizm
+	do_parallel()
 }
 
 func f1(v int) int {
