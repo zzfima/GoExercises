@@ -89,6 +89,10 @@ func main() {
 
 	//class func
 	alex.print_name()
+
+	//interface
+	var h2 IMakeVoice = &alex
+	h2.do_voice()
 }
 
 func f1(v int) int {
@@ -122,4 +126,12 @@ type Human struct {
 
 func (h *Human) print_name() {
 	fmt.Println(h.name)
+}
+
+type IMakeVoice interface {
+	do_voice()
+}
+
+func (h *Human) do_voice() {
+	fmt.Println(h.name, " screams")
 }
