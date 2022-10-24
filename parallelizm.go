@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -24,10 +25,31 @@ func hello_print_wait() {
 }
 
 func go_routine_race_condition() {
-	var print_line = "hello in closure"
+	var print_line = "hello in closure1"
 	go func() {
 		fmt.Println(print_line)
 	}()
-	print_line = "goodbye in closure"
+	print_line = "goodbye in closure1"
 	time.Sleep(100 * time.Millisecond)
+}
+
+func go_routine_no_race_condition_pass_by_value() {
+	var print_line = "hello in closure2"
+	go func(msg string) {
+		fmt.Println(msg)
+	}(print_line)
+	print_line = "goodbye in closure2"
+}
+
+func go_routine_no_race_condition_with_sync() {
+	var wg = sync.WaitGroup{}
+	wg.Add(1)
+	var print_line = "hello in closure3"
+	go func() {
+		fmt.Println(print_line)
+		wg.Done()
+	}()
+	wg.Wait()
+
+	print_line = "goodbye in closure3"
 }
