@@ -95,7 +95,8 @@ func main() {
 	h2.do_voice()
 
 	//parallelizm
-	do_parallel()
+	go_routine_wait()
+	go_routine_no_wait()
 }
 
 func f1(v int) int {

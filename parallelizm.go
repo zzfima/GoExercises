@@ -5,12 +5,20 @@ import (
 	"time"
 )
 
-func do_parallel() {
-	go hello_print()
+func go_routine_no_wait() {
+	go hello_print_no_wait()
+}
+
+func hello_print_no_wait() {
+	fmt.Println("no body wait for me...")
+}
+
+func go_routine_wait() {
+	go hello_print_wait()
 	time.Sleep(3000 * time.Millisecond)
 	fmt.Println("finished wait")
 }
 
-func hello_print() {
-	fmt.Println("Hello World")
+func hello_print_wait() {
+	fmt.Println("somebody wait for me...")
 }
