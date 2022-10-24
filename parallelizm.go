@@ -41,8 +41,9 @@ func go_routine_no_race_condition_pass_by_value() {
 	print_line = "goodbye in closure2"
 }
 
+var wg = sync.WaitGroup{}
+
 func go_routine_no_race_condition_with_sync() {
-	var wg = sync.WaitGroup{}
 	wg.Add(1)
 	var print_line = "hello in closure3"
 	go func() {
@@ -52,4 +53,43 @@ func go_routine_no_race_condition_with_sync() {
 	wg.Wait()
 
 	print_line = "goodbye in closure3"
+}
+
+var cnt1 = 0
+
+func go_routine_race_condition_prints() {
+	fmt.Println("go_routine_race_condition_prints")
+	for i := 0; i < 10; i++ {
+		wg.Add(2)
+		go increment_cnt1()
+		go print_cnt1()
+		wg.Wait()
+	}
+}
+
+var mtx = sync.RWMutex{}
+
+func go_routine_resolve_race_condition_prints() {
+	fmt.Println("go_routine_resolve_race_condition_prints")
+	cnt1 = 0
+	for i := 0; i < 10; i++ {
+		wg.Add(2)
+		go increment_cnt1()
+		go print_cnt1()
+		wg.Wait()
+	}
+}
+
+func increment_cnt1() {
+	mtx.Lock()
+	defer mtx.Unlock()
+	cnt1++
+	wg.Done()
+}
+
+func print_cnt1() {
+	mtx.RLock()
+	defer mtx.RUnlock()
+	fmt.Println("Hello ", cnt1)
+	wg.Done()
 }

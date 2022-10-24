@@ -99,6 +99,8 @@ func main() {
 	go_routine_race_condition()
 	go_routine_no_race_condition_pass_by_value()
 	go_routine_no_race_condition_with_sync()
+	go_routine_race_condition_prints()
+	go_routine_resolve_race_condition_prints()
 
 	go_routine_no_wait()
 }
