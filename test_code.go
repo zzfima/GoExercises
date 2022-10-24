@@ -96,7 +96,7 @@ func main() {
 
 	//parallelizm
 	go_routine_wait()
-	go_routine_wait_with_closure()
+	go_routine_race_condition()
 
 	go_routine_no_wait()
 }
